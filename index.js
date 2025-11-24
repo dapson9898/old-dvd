@@ -1,13 +1,14 @@
-let speed = Number(prompt("Enter speed level (1-1000): "))
+let speed = document.getElementById("slider")
+let speedvalue
 let dvd = document.getElementById("myCanvas")
-    let ctx = dvd.getContext("2d")
-    let x = 0 //max is 137
-    let y = 22 // max is 100
-    let directionx = 1
-    let directiony = 1
-    let color = ["red","orange","yellow","green","blue","indigo","violet"]
-    let index = 0
-    
+let ctx = dvd.getContext("2d")
+let x = 0 //max is 137
+let y = 22 // max is 100
+let directionx = 1
+let directiony = 1
+let color = ["red","orange","yellow","green","blue","indigo","violet"]
+let index = 0
+
     ctx.font = "30px Arial";
     ctx.fillStyle = getColor();
     // ctx.strokeText("DVD", 137, 100);
@@ -49,13 +50,22 @@ let dvd = document.getElementById("myCanvas")
         }
     }
 
-    setInterval(function() {
-        ctx.clearRect(0,0,200,100)
-        updateX()
-        updateY()
-        ctx.fillText("DVD", x, y);
-        if((x==0 && y==22) || (x==0 & y==100) || (x==137 && y==0) || (x==137 && y == 100)){
-            document.getElementById("applaud").play()
-        }    
-        
-    }, speed);
+    function moveit(){
+            ctx.clearRect(0,0,200,100)
+            updateX()
+            updateY()
+            ctx.fillText("DVD", x, y);
+            if((x==0 && y==22) || (x==0 & y==100) || (x==137 && y==0) || (x==137 && y == 100)){
+                document.getElementById("applaud").play()
+            }    
+            
+        }
+    
+    speed.addEventListener("change",()=>{
+        speedvalue = speed.value
+        // speed.value = speedvalue
+        console.log(speed.value, speed)
+        clearInterval(moveit())
+        setInterval(moveit, speed.value);
+        console.log(moveit)
+    })
